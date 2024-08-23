@@ -14,3 +14,6 @@ class Toy(models.Model):
 
     class Meta:
         ordering = ('name',)
+    
+    def _str_(self):
+        return f"{self.name}({self.toy_category})"
