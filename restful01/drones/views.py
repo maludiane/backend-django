@@ -10,6 +10,8 @@ from drones.serializers import (
     PilotCompetitionSerializer,
 )
 from drones.filters import CompetitionFilter
+from rest_framework import permissions
+from drones import custom_permissions
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -40,6 +42,8 @@ class DroneList(generics.ListCreateAPIView):
     filterset_fields = (
         "drone_category",
         "has_it_competed",
+        "manufacturing_date",
+        "has_it_competed",
     )
     # Quando não utilizamos nenhum simbolo na frente do campo a ser pesquisado,
     # vai retornar toda instância de Drone que tenha a ocorrência da palavra
@@ -54,12 +58,23 @@ class DroneList(generics.ListCreateAPIView):
         "manufacturing_date",
     )
 
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        custom_permissions.IsCurrentUserOwnerOrReadOnly,
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = "drone-detail"
-
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        custom_permissions.IsCurrentUserOwnerOrReadOnly,
+    )
 
 class PilotList(generics.ListCreateAPIView):
     queryset = Pilot.objects.all()
