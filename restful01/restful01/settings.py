@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     "rest_framework",
     # Toys application
     "toys.apps.ToysConfig",
-    #Habilita a app Drones
+    # Habilita a app Drones
     "drones.apps.DronesConfig",
     # Django Filters
     "django_filters",
+    # Token authentication
+    "rest_framework.authtoken",
+    
 ]
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "drones.pagination.LimitOffsetPaginationWithUpperBound",

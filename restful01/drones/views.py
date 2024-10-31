@@ -12,6 +12,8 @@ from drones.serializers import (
 from drones.filters import CompetitionFilter
 from rest_framework import permissions
 from drones import custom_permissions
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -87,12 +89,18 @@ class PilotList(generics.ListCreateAPIView):
     # o simbolo ^ indica que a busca vai retornar as instâncias dos Pilot que inicia com o name fornecido
     search_fields = ("=gender",)
     ordering_fields = ("name", "races_count")
+    # autenticação baseada em token
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
 
 class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
     name = "pilot-detail"
+    # autenticação baseada em token
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
 
 class CompetitionList(generics.ListCreateAPIView):
