@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     "django_filters",
     # Token authentication
     "rest_framework.authtoken",
-    
+    # OpenAPI
+    "drf_spectacular",
 ]
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "drones.pagination.LimitOffsetPaginationWithUpperBound",
@@ -71,7 +72,24 @@ REST_FRAMEWORK = {
         "drones": "20/hour",
         "pilots": "15/hour",
     },
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "RESTIC Back-end API",
+    "DESCRIPTION": "Projeto Drones",
+    "VERSION": "1.0.0",
+    "SERVE INCLUDE SCHEMA": False,
+    # OTHER SETTINGS
+    "AUTHENTICATION_WHITELIST": [
+        # Lista de autenticações suportadas na documentação
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "SWAGGER_UI_SETTINGS": {
+        "persistAuthorization": True,  # Mantém a autorização no Swagger UI durante as requisições
+    },
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
