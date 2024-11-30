@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 # Application definition
 
@@ -49,6 +52,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     # OpenAPI
     "drf_spectacular",
+    # Habilita a aplicação homepage
+    "home",
 ]
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "drones.pagination.LimitOffsetPaginationWithUpperBound",
